@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dự đoán bệnh</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 5px;
+        }
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .top-3 {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        .english-note {
+            font-size: 0.8em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dự đoán bệnh dựa trên triệu chứng</h1>
+    <form method="POST">
+        <label>Nhập các triệu chứng (cách nhau bằng dấu phẩy):</label><br>
+        <input type="text" name="symptoms" placeholder="Ví dụ: ngứa, phát ban da, sốt" style="width: 300px;"><br>
+        <input type="submit" value="Dự đoán">
+    </form>
+    {% if prediction %}
+        <div class="result">
+            <h3>Bệnh dự đoán: {{ prediction }}</h3>
+            {% if english_prediction %}
+                <p class="english-note">(Tên tiếng Anh: {{ english_prediction }})</p>
+            {% endif %}
+            {% if top_3 %}
+                <h4>Top 3 bệnh có khả năng cao nhất:</h4>
+                <ul class="top-3">
+                    {% for viet_disease, prob in top_3 %}
+                        <li>{{ viet_disease }}: {{ prob }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
